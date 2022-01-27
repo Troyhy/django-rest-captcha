@@ -1,7 +1,9 @@
 import uuid
 import base64
-from rest_framework import views, response
+
 from django.core.cache import caches
+from rest_framework import views, response
+
 from .settings import api_settings
 from . import utils
 from . import captcha
@@ -26,7 +28,7 @@ class RestCaptchaView(views.APIView):
         data = {
             api_settings.CAPTCHA_KEY: key,
             api_settings.CAPTCHA_IMAGE: image_b64,
-            'image_type': 'image/png',
-            'image_decode': 'base64'
+            "image_type": "image/png",
+            "image_decode": "base64",
         }
         return response.Response(data)

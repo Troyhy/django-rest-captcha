@@ -12,7 +12,7 @@ Lightweight version of `django-simple-captcha` for work with `django-rest-framew
 
 ## Usage
 Add `RestCaptchaSerializer` to your protected request validator:
-```
+```python
 from rest_captcha serializer import RestCaptchaSerializer
 class HumanOnlyDataSerializer(RestCaptchaSerializer):
     pass
@@ -27,7 +27,7 @@ For provide this fields client(js code) should generate key:
     'image_type': 'image/png',
     'image_decode': 'base64',
     'captcha_key': 'de67e7f3-72d9-42d8-9677-ea381610363d',
-    'captcha_value': '... image encoded in base64'
+    'captcha_image': '... image encoded in base64'
 }
 ```
 `captcha_value` - is base64 encoded PNG image, client should decode and show this image to human for validation and send letters from captcha to protected api.
@@ -43,7 +43,7 @@ If human have mistake - client should re generate your image.
 
 ### Add to your settings.py
 Add to installed apps:
-```
+```python
 INSTALLED_APPS = (
     ...
     'rest_captcha',
@@ -51,7 +51,7 @@ INSTALLED_APPS = (
 ```
 
 Set rest_captcha settings (if you want), see defaults:
-```
+```python
 REST_CAPTCHA = {
     'CAPTCHA_CACHE': 'default',
     'CAPTCHA_TIMEOUT': 300,  # 5 minutes
@@ -69,7 +69,7 @@ REST_CAPTCHA = {
 ```
 
 We recommend using redis or local memory as cache with set parameter, with bigger value of MAX_ENTRIES:
-```
+```python
 CACHES={
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -80,9 +80,9 @@ CACHES={
 ```
 
 ### Add hooks to your app router (urls.py):
-```
+```python
 urlpatterns = [
     ...
-    url(r'api/captcha/', include('rest_captcha.urls')),
+    path(r'api/captcha/', include('rest_captcha.urls')),
 ]
 ```

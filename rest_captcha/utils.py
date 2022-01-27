@@ -1,4 +1,5 @@
 import random
+
 from rest_captcha import VERSION
 from .settings import api_settings
 
@@ -11,8 +12,8 @@ def get_cache_key(captcha_key):
 
 
 def random_char_challenge(length):
-    chars = 'abcdefghijklmnopqrstuvwxyz'
-    ret = ''
+    chars = "abcdefghijklmnopqrstuvwxyz"
+    ret = ""
     for i in range(length):
         ret += random.choice(chars)
     return ret.upper()

@@ -1,15 +1,13 @@
 import random
+from io import BytesIO as StringIO
+
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
 from .settings import api_settings as settings
 from . import utils
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from io import BytesIO as StringIO
 
-FONT = ImageFont.truetype(
-    settings.CAPTCHA_FONT_PATH, settings.CAPTCHA_FONT_SIZE)
+FONT = ImageFont.truetype(settings.CAPTCHA_FONT_PATH, settings.CAPTCHA_FONT_SIZE)
 
 
 def filter_default(image):
@@ -22,18 +20,17 @@ def noise_default(image, draw):
 
 
 def getsize(font, text):
-    if hasattr(font, 'getoffset'):
-        return tuple(
-            [x + y for x, y in zip(font.getsize(text), font.getoffset(text))])
+    if hasattr(font, "getoffset"):
+        return tuple([x + y for x, y in zip(font.getsize(text), font.getoffset(text))])
     else:
         return font.getsize(text)
 
 
 def makeimg(size):
     if settings.CAPTCHA_BACKGROUND_COLOR == "transparent":
-        image = Image.new('RGBA', size)
+        image = Image.new("RGBA", size)
     else:
-        image = Image.new('RGB', size, settings.CAPTCHA_BACKGROUND_COLOR)
+        image = Image.new("RGB", size, settings.CAPTCHA_BACKGROUND_COLOR)
     return image
 
 
@@ -47,17 +44,16 @@ def generate_image(word):
     image = makeimg(size)
 
     for char in word:
-        fgimage = Image.new('RGB', size, settings.CAPTCHA_FOREGROUND_COLOR)
-        charimage = Image.new('L', getsize(font, ' %s ' % char), '#000000')
+        fgimage = Image.new("RGB", size, settings.CAPTCHA_FOREGROUND_COLOR)
+        charimage = Image.new("L", getsize(font, " %s " % char), "#000000")
         chardraw = ImageDraw.Draw(charimage)
-        chardraw.text((0, 0), ' %s ' % char, font=font, fill='#ffffff')
+        chardraw.text((0, 0), " %s " % char, font=font, fill="#ffffff")
         if settings.CAPTCHA_LETTER_ROTATION:
             angle = random.randrange(*settings.CAPTCHA_LETTER_ROTATION)
-            charimage = charimage.rotate(
-                angle, expand=0, resample=Image.BICUBIC)
+            charimage = charimage.rotate(angle, expand=0, resample=Image.BICUBIC)
 
         charimage = charimage.crop(charimage.getbbox())
-        maskimage = Image.new('L', size)
+        maskimage = Image.new("L", size)
 
         xpos2 = xpos + charimage.size[0]
         from_top2 = from_top + charimage.size[1]
@@ -82,7 +78,7 @@ def generate_image(word):
     settings.NOISE_FUNCTION(image, draw)
 
     out = StringIO()
-    image.save(out, 'PNG')
+    image.save(out, "PNG")
     content = out.getvalue()
     out.seek(0)
     out.close()
