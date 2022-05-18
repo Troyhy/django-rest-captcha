@@ -12,8 +12,6 @@ DEFAULTS = {
     "CAPTCHA_CACHE": "default",
     "CAPTCHA_TIMEOUT": 300,  # 5 minuts
     "CAPTCHA_CACHE_KEY": "rest_captcha_{key}.{version}",
-    "CAPTCHA_KEY": "captcha_key",
-    "CAPTCHA_IMAGE": "captcha_image",
     "CAPTCHA_LENGTH": 4,
     "CAPTCHA_FONT_PATH": FONT_PATH,
     "CAPTCHA_FONT_SIZE": 22,
