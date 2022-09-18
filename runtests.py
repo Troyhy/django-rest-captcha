@@ -44,3 +44,7 @@ def main():
     else:
         apps.populate(settings.INSTALLED_APPS)
     call_command("test", "rest_captcha")
+
+
+if __name__ == '__main__':
+    main()

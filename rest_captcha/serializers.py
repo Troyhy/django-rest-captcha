@@ -45,7 +45,7 @@ class ImageSerializer(serializers.Serializer):
     image_type = serializers.CharField(help_text="always will be image/png")
     image_decode = serializers.CharField(help_text="always will be base64")
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         key = str(uuid.uuid4())
         value = utils.random_char_challenge(api_settings.CAPTCHA_LENGTH)
         cache_key = utils.get_cache_key(key)
@@ -54,11 +54,12 @@ class ImageSerializer(serializers.Serializer):
         # generate image
         image_bytes = captcha.generate_image(value)
         image = base64.b64encode(image_bytes)
-        return super().__init__(
+        super().__init__(
             data={
                 "captcha_key": key,
                 "captcha_image": image.decode("ascii"),
                 "image_type": "image/png",
                 "image_decode": "base64",
-            }
+            },
+            **kwargs
         )
