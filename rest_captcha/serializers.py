@@ -13,8 +13,8 @@ cache = caches[api_settings.CAPTCHA_CACHE]
 
 
 class RestCaptchaSerializer(serializers.Serializer):
-    captcha_key = serializers.CharField(max_length=64)
-    captcha_value = serializers.CharField(max_length=8, trim_whitespace=True)
+    captcha_key = serializers.CharField(max_length=64, write_only=True)
+    captcha_value = serializers.CharField(max_length=8, write_only=True, trim_whitespace=True)
 
     def validate(self, data):
         super(RestCaptchaSerializer, self).validate(data)
@@ -63,3 +63,4 @@ class ImageSerializer(serializers.Serializer):
             },
             **kwargs
         )
+        self.is_valid()

@@ -38,7 +38,7 @@ If human have mistake - client should re generate your image.
 
 ## Install
 ```
-> pip install django-rest-captcha
+> pip install git+https://github.com/Troyhy/django-rest-captcha.git@master#egg=django-rest-captcha
 ```
 
 ### Add to your settings.py
