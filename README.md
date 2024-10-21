@@ -8,12 +8,12 @@ Lightweight version of `django-simple-captcha` for work with `django-rest-framew
 - Speed: use `cache` instead of database
 - Safety: union methods for generate key and image. (You can't generate many images for one key)
 - Easy: only one rest api (for generate, refresh image).
-
+- Does not require any cookies, does not require cookie banners
 
 ## Usage
 Add `RestCaptchaSerializer` to your protected request validator:
 ```python
-from rest_captcha serializer import RestCaptchaSerializer
+from rest_captcha.serializer import RestCaptchaSerializer
 class HumanOnlyDataSerializer(RestCaptchaSerializer):
     pass
 ```
