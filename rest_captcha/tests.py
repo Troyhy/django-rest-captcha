@@ -109,10 +109,12 @@ class ImageGenTests(TestCase):
 
         result = self.client.post(reverse("rest_captcha")).json()
         fname = "captcha.png"
-        path = os.path.join(os.path.dirname(__file__), fname)
+
         image = base64.b64decode(result["captcha_image"])
         # with open('captcha_py3.png', 'wb') as f:
         #     f.write(image)
+
+        path = os.path.join(os.path.dirname(__file__), fname)
         image2 = open(path, "rb").read()
         assert image2 == image
 

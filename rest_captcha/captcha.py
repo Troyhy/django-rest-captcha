@@ -20,10 +20,12 @@ def noise_default(image, draw):
 
 
 def getsize(font, text):
-    if hasattr(font, "getoffset"):
-        return tuple([x + y for x, y in zip(font.getsize(text), font.getoffset(text))])
-    else:
-        return font.getsize(text)
+
+    # PIL deprecated font.getsize()
+    left, top, right, bottom = font.getbbox(text)
+    width = right - left
+    height = bottom - top
+    return width, bottom
 
 
 def makeimg(size):
